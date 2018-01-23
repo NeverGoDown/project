@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script type="text/javascript" src="jquery-1.12.1.js"></script>
+  <style>
+    .box {
+      width: 560px;
+      height: 300px;
+      border: 1px solid pink;
+      margin: 100px auto;
+      position: relative;
+    }
+    .box ul {
+      list-style: none;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .box ul li {
+      float: left;
+      width: 112px;
+      height: 100%;
+      transform-style: preserve-3d;
+      /*transform: rotateX(30deg) rotateY(30deg);*/
+    }
+    .box a {
+      text-decoration: none;
+      font-size: 30px;
+    }
+    .box .prev {
+      position: absolute;
+      width: 40px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      left: 0;
+      top: 120px;
+      background-color: #ccc;
+      z-index: 1;
+    }
+    .box .next {
+      position: absolute;
+      width: 40px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      right: 0;
+      top: 120px;
+      background-color: #ccc;
+      z-index: 1;
+    }
+    /*设置第一张背景图*/
+    .box ul li span:first-child {
+      position: absolute;
+      width: 112px;
+      height: 300px;
+      background: url("images/1.jpg") no-repeat 0 0;
+    }
+    .box ul li:nth-child(2) span:first-child {
+      background: url("images/1.jpg") no-repeat -112px 0;
+    }
+    .box ul li:nth-child(3) span:first-child {
+      background: url("images/1.jpg") no-repeat -224px 0;
+    }
+    .box ul li:nth-child(4) span:first-child {
+      background: url("images/1.jpg") no-repeat -336px 0;
+    }
+    .box ul li:nth-child(5) span:first-child {
+      background: url("images/1.jpg") no-repeat -448px 0;
+    }
+    /*设置第二张背景图*/
+    .box ul li span:nth-child(2) {
+      position: absolute;
+      width: 112px;
+      height: 300px;
+      background: url("images/2.jpg") no-repeat 0 0;
+    }
+    .box ul li:nth-child(2) span:nth-child(2) {
+      background: url("images/2.jpg") no-repeat -112px 0;
+    }
+    .box ul li:nth-child(3) span:nth-child(2) {
+      background: url("images/2.jpg") no-repeat -224px 0;
+    }
+    .box ul li:nth-child(4) span:nth-child(2) {
+      background: url("images/2.jpg") no-repeat -336px 0;
+    }
+    .box ul li:nth-child(5) span:nth-child(2) {
+      background: url("images/2.jpg") no-repeat -448px 0;
+    }
+    /*设置第三张背景图*/
+    .box ul li span:nth-child(3) {
+      position: absolute;
+      width: 112px;
+      height: 300px;
+      background: url("images/3.jpg") no-repeat 0 0;
+    }
+    .box ul li:nth-child(2) span:nth-child(3) {
+      background: url("images/3.jpg") no-repeat -112px 0;
+    }
+    .box ul li:nth-child(3) span:nth-child(3) {
+      background: url("images/3.jpg") no-repeat -224px 0;
+    }
+    .box ul li:nth-child(4) span:nth-child(3) {
+      background: url("images/3.jpg") no-repeat -336px 0;
+    }
+    .box ul li:nth-child(5) span:nth-child(3) {
+      background: url("images/3.jpg") no-repeat -448px 0;
+    }
+    /*设置第四张背景图*/
+    .box ul li span:nth-child(4) {
+      position: absolute;
+      width: 112px;
+      height: 300px;
+      background: url("images/4.jpg") no-repeat 0 0;
+    }
+    .box ul li:nth-child(2) span:nth-child(4) {
+      background: url("images/4.jpg") no-repeat -112px 0;
+    }
+    .box ul li:nth-child(3) span:nth-child(4) {
+      background: url("images/4.jpg") no-repeat -224px 0;
+    }
+    .box ul li:nth-child(4) span:nth-child(4) {
+      background: url("images/4.jpg") no-repeat -336px 0;
+    }
+    .box ul li:nth-child(5) span:nth-child(4) {
+      background: url("images/4.jpg") no-repeat -448px 0;
+    }
+    /*把li延Z轴向屏幕外移动150px*/
+    .box ul li span:nth-child(1) {
+      transform: translateZ(150px);
+    }
+    .box ul li span:nth-child(2) {
+      transform: rotateX(90deg) translateZ(150px);
+    }
+    .box ul li span:nth-child(3) {
+      transform: rotateX(-180deg) translateZ(150px);
+    }
+    .box ul li span:nth-child(4) {
+      transform: rotateX(-90deg) translateZ(150px);
+    }
+  </style>
+</head>
+<body>
+<div class="box">
+  <a href="javascript:;" class="prev">&lt;</a>
+  <a href="javascript:;" class="next">&gt;</a>
+  <ul>
+    <li><span></span><span></span><span></span><span></span></li>
+    <li><span></span><span></span><span></span><span></span></li>
+    <li><span></span><span></span><span></span><span></span></li>
+    <li><span></span><span></span><span></span><span></span></li>
+    <li><span></span><span></span><span></span><span></span></li>
+  </ul>
+</div>
+<script type="text/javascript">
+  $(function () {
+    var index = 0;
+    var lock = true;
+    /* :last 过滤选择器 jquery扩展提供 :first :eq() :visible :hidden :even :odd :checked :selected */
+    $('.box li:last').on('transitionend', function () {
+      lock = true;
+    });
+    $('.prev').click(function () {
+      if (!lock) return false;
+      lock = false;
+      index--;
+      var deg = -index * 90;
+      $('.box li').css({
+        'transform': 'rotateX(' + deg + 'deg)',
+        'transition': 'all 1s linear'
+      }).each(function (i, item) {
+        $(item).css('transition-delay', 0.25 * i + 's');
+      });
+    });
+    $('.next').click(function () {
+      if (!lock) return false;
+      lock = false;
+      index++;
+      var deg = -index * 90;
+      $('.box li').css({
+        'transform': 'rotateX(' + deg + 'deg)',
+        'transition': 'all 1s linear'
+      }).each(function (i, item) {
+        $(item).css('transition-delay', 0.25 * i + 's');
+      });
+    });
+
+
+    var timeId;
+    function autoplay(){
+      timeId = setInterval(function () {
+        $('.next').click();
+      }, 2000);
+    }
+    autoplay();
+    $('.box').on('mouseenter',function(){
+      clearInterval(timeId);
+    });
+    $('.box').on('mouseleave',function(){
+      autoplay();
+    });
+    
+  });
+</script>
+</body>
+</html>
