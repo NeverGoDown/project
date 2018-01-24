@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div {
+			width: 1000px;
+			height: 500px;
+			line-height: 500px;
+			text-align: center;
+			margin: 50px auto;
+		}
+		span {
+			display: inline-block;
+			height: 200px;
+			line-height: 200px;
+			text-align: center;
+			font-size: 100px;
+		}
+		.ab {
+			width: 200px;
+			border-radius: 40px;
+			color: gold;
+			background-color: #000;
+			font-size: 100px;
+		}
+	</style>
+</head>
+<body>
+   	<div>
+		<span class="ab">00</span>
+		<span>:</span>
+		<span class="ab">00</span>
+		<span>:</span>
+		<span class="ab">00</span>
+		<span>:</span>
+		<span class="ab">00</span>
+    </div>
+	<script>
+		var spansNode = document.querySelectorAll('.ab');
+		function getDif(startTime,endTime){
+			var totalMs = endTime.getTime()-startTime.getTime();
+			var dd = parseInt(totalMs/1000/60/60/24)
+			var hh = parseInt(totalMs/1000/60/60%24);
+			var mm = parseInt(totalMs/1000/60%60);
+			var ss = parseInt(totalMs/1000%60);
+			dd = dd<10?'0'+dd:dd;
+			hh = hh<10?'0'+hh:hh;
+			mm = mm<10?'0'+mm:mm;
+			ss = ss<10?'0'+ss:ss;
+			return {day:dd,hours:hh,minutes:mm,seconds:ss};
+		}
+		var e = new Date('2018/02/08 18:00:00');
+		var i = setInterval(function(){
+			var s = new Date();
+			var obj = getDif(s,e);
+			spansNode[0].innerHTML = obj.day;
+			spansNode[1].innerHTML = obj.hours;
+			spansNode[2].innerHTML = obj.minutes;
+			spansNode[3].innerHTML = obj.seconds;
+			if(obj.hours=='00'&&obj.minutes=='00'&&obj.seconds=='00'){
+				clearInterval(i);
+			}
+		},1000);
+	</script>
+</body>
+</html>
